@@ -31,6 +31,7 @@ jobs:
       BUILDX_NO_DEFAULT_ATTESTATIONS: 1
     executor: arm-machine
     steps:
+      - run: docker info
       - aws-ecr/build_and_push_image:
           auth:
             - aws-cli/setup:
