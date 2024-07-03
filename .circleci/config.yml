@@ -29,20 +29,28 @@ jobs:
       AWS_PAGER: ''
     executor: arm-machine
     steps:
-      - checkout
-      # run the aws-cli/setup command from the orb
-      - aws-cli/setup:
-          role_arn: << pipeline.parameters.aws-oidc-role-arn >>
-          region: ${AWS_REGION}
-          # optional parameters
-          role_session_name: "test-session"
-          session_duration: "1800"
-      - run: aws sts get-caller-identity
-      - aws-ecr/ecr_login:
-          public_registry: false
+      - aws-ecr/build_and_push_image:
+          auth:
+            - aws-cli/setup:
+                role_arn: << pipeline.parameters.aws-oidc-role-arn >>
+                region: ${AWS_REGION}
+                # optional parameters
+                role_session_name: "test-session"
+                session_duration: "1800"
+            - run: aws sts get-caller-identity
+          create_repo: false
+          dockerfile: Dockerfile
           account_id: "992382483259"
+          platform: linux/arm64
           region: << pipeline.parameters.aws-region >>
-      - run: docker pull << pipeline.parameters.aws-ecr-image >>
+          repo: kelvintaywl-cci-redis
+          tag: '${CIRCLE_SHA1}'        
+
+      # - aws-ecr/ecr_login:
+      #     public_registry: false
+      #     account_id: "992382483259"
+      #     region: << pipeline.parameters.aws-region >>
+      # - run: docker pull << pipeline.parameters.aws-ecr-image >>
 workflows:
   main:
     jobs:
