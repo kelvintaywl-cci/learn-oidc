@@ -39,7 +39,7 @@ jobs:
                 # optional parameters
                 role_session_name: "test-session"
                 session_duration: "1800"
-            - run: aws sts get-caller-identity
+            # - run: aws sts get-caller-identity
           create_repo: false
           dockerfile: Dockerfile
           account_id: "992382483259"
