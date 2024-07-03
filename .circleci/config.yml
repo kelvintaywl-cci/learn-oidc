@@ -36,6 +36,7 @@ jobs:
           public_registry: true
           account_id: "992382483259"
           region: us-east-1
+      - run: docker pull public.ecr.aws/o5b1w9d8/kelvintaywl-cci-cimg-base:latest
 workflows:
   main:
     jobs:
