@@ -21,12 +21,12 @@ jobs:
       - checkout
       # run the aws-cli/setup command from the orb
       - aws-cli/setup:
-          role-arn: << pipeline.parameters.aws-oidc-role-arn >>
-          aws-region: ${AWS_REGION}
+          role_arn: << pipeline.parameters.aws-oidc-role-arn >>
+          aws_region: ${AWS_REGION}
           # optional parameters
-          profile-name: "OIDC-PROFILE"
-          role-session-name: "test-session"
-          session-duration: "1800"
+          profile_name: "OIDC-PROFILE"
+          role_session_name: "test-session"
+          session_duration: "1800"
       - run: aws sts get-caller-identity
 
 workflows:
