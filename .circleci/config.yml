@@ -5,6 +5,10 @@ executors:
     machine:
       image: ubuntu-2204:2023.07.1
     resource_class: arm.medium
+  amd-machine:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: medium
 
 parameters:
   aws-oidc-role-arn:
@@ -29,7 +33,7 @@ jobs:
       AWS_PAGER: ''
       # see https://github.com/CircleCI-Public/aws-ecr-orb/pull/339/files
       BUILDX_NO_DEFAULT_ATTESTATIONS: 1
-    executor: arm-machine
+    executor: amd-machine
     steps:
       - run: docker info
       - aws-ecr/build_and_push_image:
@@ -44,7 +48,7 @@ jobs:
           create_repo: false
           dockerfile: Dockerfile
           account_id: "992382483259"
-          platform: linux/arm64
+          platform: linux/amd64
           region: << pipeline.parameters.aws-region >>
           repo: kelvintaywl-cci-redis
           tag: '${CIRCLE_SHA1}'        
