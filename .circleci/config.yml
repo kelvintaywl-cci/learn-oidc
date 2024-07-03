@@ -27,6 +27,8 @@ jobs:
       AWS_REGION: << pipeline.parameters.aws-region >>
       # no paging
       AWS_PAGER: ''
+      # see https://github.com/CircleCI-Public/aws-ecr-orb/pull/339/files
+      BUILDX_NO_DEFAULT_ATTESTATIONS: 1
     executor: arm-machine
     steps:
       - aws-ecr/build_and_push_image:
