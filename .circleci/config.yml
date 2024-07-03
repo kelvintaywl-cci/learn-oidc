@@ -1,0 +1,37 @@
+version: 2.1
+
+parameters:
+  aws-oidc-role-arn:
+    type: string
+    default: arn:aws:iam::992382483259:role/kelvintaywl-oidc-ecr-public-read
+
+orbs:
+  aws-ecr: circleci/aws-ecr@9.1.0
+  aws-cli: circleci/aws-cli@4.1.3
+
+jobs:
+  aws-example:
+    environment:
+      AWS_REGION: ap-northeast-1
+      # no paging
+      AWS_PAGER: ''
+    docker:
+      - image: cimg/aws:2023.06
+    steps:
+      - checkout
+      # run the aws-cli/setup command from the orb
+      - aws-cli/setup:
+          role-arn: << pipeline.parameters.aws-oidc-role-arn >>
+          aws-region: ${AWS_REGION}
+          # optional parameters
+          profile-name: "OIDC-PROFILE"
+          role-session-name: "test-session"
+          session-duration: "1800"
+      - run: aws sts get-caller-identity
+
+workflows:
+  main:
+    jobs:
+      - aws-example:
+          context:
+            - foo-2
