@@ -12,7 +12,7 @@ parameters:
     default: arn:aws:iam::992382483259:role/kelvintaywl-oidc-ecr-public-read
 
 orbs:
-  aws-ecr: circleci/aws-ecr@9.1.0
+  aws-ecr: circleci/aws-ecr@9.0.2
   aws-cli: circleci/aws-cli@4.1.3
 
 jobs:
@@ -32,7 +32,10 @@ jobs:
           role_session_name: "test-session"
           session_duration: "1800"
       - run: aws sts get-caller-identity
-
+      - aws-ecr/ecr_login:
+          public_registry: true
+          account_id: "992382483259"
+          region: us-east-1
 workflows:
   main:
     jobs:
