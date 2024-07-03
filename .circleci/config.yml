@@ -3,10 +3,13 @@ version: 2.1
 executors:
   arm-machine:
     machine:
-      image: ubuntu-2204:2023.07.1
+      image: ubuntu-2204:current
     resource_class: arm.medium
 
 parameters:
+  machine-image:
+    type: string
+    default: ubuntu-2204:2023.07.1
   aws-oidc-role-arn:
     type: string
     default: arn:aws:iam::992382483259:role/kelvintaywl-oidc-ecr-readwrite
