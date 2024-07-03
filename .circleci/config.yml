@@ -24,7 +24,6 @@ jobs:
           role_arn: << pipeline.parameters.aws-oidc-role-arn >>
           region: ${AWS_REGION}
           # optional parameters
-          profile_name: "OIDC-PROFILE"
           role_session_name: "test-session"
           session_duration: "1800"
       - run: aws sts get-caller-identity
