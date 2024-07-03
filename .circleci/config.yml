@@ -1,5 +1,11 @@
 version: 2.1
 
+executors:
+  arm-machine:
+    machine:
+      image: ubuntu-2204:2023.07.1
+    resource_class: arm.medium
+
 parameters:
   aws-oidc-role-arn:
     type: string
@@ -15,8 +21,7 @@ jobs:
       AWS_REGION: ap-northeast-1
       # no paging
       AWS_PAGER: ''
-    docker:
-      - image: cimg/aws:2023.06
+    executor: arm-machine
     steps:
       - checkout
       # run the aws-cli/setup command from the orb
