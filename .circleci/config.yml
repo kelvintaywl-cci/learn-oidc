@@ -22,7 +22,7 @@ jobs:
       # run the aws-cli/setup command from the orb
       - aws-cli/setup:
           role_arn: << pipeline.parameters.aws-oidc-role-arn >>
-          aws_region: ${AWS_REGION}
+          region: ${AWS_REGION}
           # optional parameters
           profile_name: "OIDC-PROFILE"
           role_session_name: "test-session"
