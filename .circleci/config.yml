@@ -32,8 +32,7 @@ jobs:
       AWS_PAGER: ''
       # see https://github.com/CircleCI-Public/aws-ecr-orb/pull/339/files
       BUILDX_NO_DEFAULT_ATTESTATIONS: 1
-    executor:
-      machine: true
+    machine: true
     steps:
       - aws-cli/setup:
           role_arn: << pipeline.parameters.aws-oidc-role-arn >>
@@ -42,12 +41,6 @@ jobs:
           role_session_name: "test-session"
           session_duration: "1800"
       - run: aws sts get-caller-identity      
-
-      # - aws-ecr/ecr_login:
-      #     public_registry: false
-      #     account_id: "992382483259"
-      #     region: << pipeline.parameters.aws-region >>
-      # - run: docker pull << pipeline.parameters.aws-ecr-image >>
 workflows:
   main:
     jobs:
